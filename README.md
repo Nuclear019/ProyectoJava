@@ -10,5 +10,4 @@ Para ejecutar el proyecto en principio con bajarte el codigo y ejecutarlo deber�
 Una vez ejecutado el proyecto contará con una interfaz con dos pestañas, una para consultar jugadores y otra para consultar equipos. En la pestaña de jugadores se podrá buscar jugadores segun su nombre y en la pestaña de equipos se 
 mostrará una tabla con todos los equipos de la base de datos. Pulsando en el boton de mas info se mostrará una nueva ventana con los datos del equipo y un historial de los ultimos partidos y de los partidos que tendrá en el futuro.
 
-
-Actualmente el proyecto se encuentra pausado, pero en un futuro se seguirá con su desarrollo.
+Actualmente se está trabajando en la implemetación de SpringBoot en el proyecto para crear una web desde la que consultar los datos de la base de datos.
