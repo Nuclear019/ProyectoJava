@@ -1,12 +1,51 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>NBA APP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
 </head>
+<style>
+
+    .container {
+        margin-top: 50px;
+    }
+    .card {
+        margin: 10px;
+    }
+    .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+</style>
 <body>
-    <h1>Spring Boot Thymeleaf Example</h1>
+    <div class="container">
+        <h1 class="text-center">NBA APP</h1>
+        <div class="card-group">
+            <div class="card">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Info Equipos</h5>
+                    <p class="card-text">Accede a la información de todos los equipos que están en la NBA.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Info Jugadores</h5>
+                    <p class="card-text">Accede a la informaciçon de todos los jugadores que están y han estado en la NBA.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
+<footer class="footer bg-light text-center ">
+        <span class="text-muted">Desarrollado por Miguel Seoane(@nuclear019).</span>
+</footer>
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

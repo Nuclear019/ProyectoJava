@@ -18,6 +18,7 @@ public class JugadorService {
 
     @GetMapping("/")
     public List<Jugador> getJugadores(){
-        return jugadorRepository.findAll();
+        List<Jugador> jugadores = jugadorRepository.findAll();
+        return jugadores;
     }
 }

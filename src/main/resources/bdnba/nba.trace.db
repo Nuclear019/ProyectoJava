@@ -1,0 +1,3 @@
+2024-07-03 15:43:34.825736+02:00 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "Jugador" not found (this database is empty); SQL statement:
+select j1_0.idJugador,j1_0.altura,j1_0.apellido,j1_0.colegio,j1_0.anoDraft,j1_0.numeroDraft,j1_0.rondaDraft,j1_0.foto,j1_0.idEquipo,j1_0.nombre,j1_0.numero,j1_0.pais,j1_0.peso,j1_0.posicion from Jugador j1_0 [42104-224]
