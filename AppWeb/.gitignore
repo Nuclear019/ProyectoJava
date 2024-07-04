@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+/src/main/resources/application.properties
+/src/main/resources/bdnba
+/src/main/resources/META-INF
+/src/main/com/example/demo/Configuration/

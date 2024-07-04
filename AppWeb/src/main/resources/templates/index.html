@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>NBA APP</title>
@@ -26,18 +27,23 @@
         <h1 class="text-center">NBA APP</h1>
         <div class="card-group">
             <div class="card">
-                <img src="..." class="card-img-top" alt="...">
+                <a href="#" class="text-decoration-none text-primary">
+
+                <img  th:src="@{/img/logos_NBA.jpg}"  class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Info Equipos</h5>
                     <p class="card-text">Accede a la información de todos los equipos que están en la NBA.</p>
                 </div>
+                </a>
             </div>
             <div class="card">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Info Jugadores</h5>
-                    <p class="card-text">Accede a la informaciçon de todos los jugadores que están y han estado en la NBA.</p>
-                </div>
+                <a th:href="@{/jugadoresNBA}" class="text-decoration-none text-primary">
+                    <img th:src="@{/img/jugadores_NBA.jpg}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Info Jugadores</h5>
+                        <p class="card-text">Accede a la información de todos los jugadores que están y han estado en la NBA.</p>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

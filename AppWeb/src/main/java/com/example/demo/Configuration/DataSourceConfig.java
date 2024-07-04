@@ -12,7 +12,7 @@ public class DataSourceConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setUrl("jdbc:h2:file:C:\\Miguel Seoane\\ProyectoJava\\AppWeb\\src\\main\\resources\\bdnba\\nba;DATABASE_TO_UPPER=FALSE;FILE_LOCK=NO;DB_CLOSE_DELAY=-1");
+        dataSource.setUrl("jdbc:h2:file:C:\\Users\\mikis\\Documents\\2ºDam\\PMDM\\DAM_UF2_Proyecto\\ProyectoJava\\AppWeb\\src\\main\\resources\\bdnba\\nba;DATABASE_TO_UPPER=FALSE;FILE_LOCK=NO;DB_CLOSE_DELAY=-1");
         return dataSource;
     }
 }
