@@ -11,7 +11,7 @@
 <th:block>
     <h1 th:text="${jugador.nombre + ' ' + jugador.apellido}"></h1>
     <p th:text="${jugador.idEquipo.nombre}"></p>
-    <img th:src="'data:image/jpeg;base64,' + ${image}" alt="Foto del jugador"/>
+    <img th:src="'data:image/png;base64,' + ${imagen}" alt="Imagen del Jugador"/>
     <p th:text="${jugador.posicion != null ? jugador.posicion : '-'}"></p>
     <p th:text="${jugador.altura != null ? jugador.altura : '-'}"></p>
     <p th:text="${jugador.peso != null ? jugador.peso : '-'}"></p>

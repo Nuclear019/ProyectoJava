@@ -25,6 +25,7 @@ public class JugadoresController {
     }
 
 
+
     public JugadorDto buscarJugadorporNombre(String nombre) {
         String[] nombreCompleto = nombre.split(" ");
         Jugador jugador;
@@ -46,6 +47,7 @@ public class JugadoresController {
 
 
         JugadorDto jugadorDto = new JugadorDto(
+                jugador.getIdJugador(),
                 jugador.getNombre()+" "+jugador.getApellido(),
                 equipo.getNombreCompleto(),
                 jugador.getPosicion(),
@@ -61,5 +63,22 @@ public class JugadoresController {
         );
 
         return jugadorDto;
+    }
+
+    public void changeImagenJugador(Long idJugador, byte[] bytesImagen) {
+        Jugador jugador = jugadorDao.get(idJugador);
+        jugador.setFoto(bytesImagen);
+        Imagen imagen = imagenDao.getImagenByJugadorId(jugador.getIdJugador());
+        if (imagen == null) {
+            imagen = new Imagen(jugador, "Imagen de jugador", "image/"+jugador.getNombre()+" "+jugador.getApellido(), bytesImagen);
+            imagenDao.insert(imagen);
+            jugadorDao.update(jugador);
+        }
+        else {
+            imagen.setImagen(bytesImagen);
+            imagenDao.update(imagen);
+            jugadorDao.update(jugador);
+
+        }
     }
 }

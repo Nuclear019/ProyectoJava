@@ -1,9 +1,11 @@
 package view;
 
 import controller.ImagenController;
+import controller.JugadoresController;
 import model.Classes.Draft;
 import model.Dtos.JugadorDetallesDto;
 import model.Dtos.JugadorDto;
+import model.EMF;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -19,12 +21,12 @@ public class PanelDetallesJugador extends JPanel {
     private JPanel panelDraftJugador;
     private JButton botonAñadirImagen;
     private JButton botonEditarImagen;
-    ImagenController imagenController;
+    JugadoresController jugadoresController;
 
 
     public PanelDetallesJugador(JugadorDto jugadorDto) {
         setLayout(new GridLayout(3,2));
-        imagenController = new ImagenController();
+        jugadoresController = new JugadoresController(EMF.get().createEntityManager());
         JugadorDetallesDto jugadorDetallesDto = new JugadorDetallesDto(jugadorDto.getNombreEquipo(), jugadorDto.getPosicion(), jugadorDto.getAltura(), jugadorDto.getPeso(), jugadorDto.getProcedencia());
         panelDatosJugador = new PanelInfoJugador(jugadorDetallesDto);
         panelDraftJugador = new PanelInfoDraft(new Draft(jugadorDto.getFechaDraft(), jugadorDto.getRondaDraft(), jugadorDto.getNumeroDraft()));
@@ -45,13 +47,10 @@ public class PanelDetallesJugador extends JPanel {
                 JOptionPane.showMessageDialog(null, "Error al cargar la imagen");
             }
         }
-        else {
-
-
-        }
 
         nombreJugador = new JLabel(jugadorDto.getNombreCompleto());
         nombreJugador.setFont(new Font("Arial", Font.BOLD, 20));
+
 
 
         botonAñadirImagen.addActionListener(e -> {
@@ -60,19 +59,8 @@ public class PanelDetallesJugador extends JPanel {
             File archivo = fileChooser.getSelectedFile();
             if (archivo != null) {
                 try {
-                    BufferedImage imagen = ImageIO.read(archivo);
-                    if (imagen == null) {
-                        JOptionPane.showMessageDialog(null, "Debes añadir una imagen JPG o PNG");
-                        return;
-                    }
-                    else {
-                        ImageIcon icono = new ImageIcon(imagen.toString());
-                        imagenController.addImagenJugador(jugadorDto.getNombreCompleto(), convertirFileABytes(archivo));
-                        botonAñadirImagen.setVisible(false);
-                        JOptionPane.showMessageDialog(null, "Reinicia la app o pulse de nuevo en buscar para que se cargue la imagen.");
-
-                    }
-
+                    jugadoresController.changeImagenJugador(jugadorDto.getId(), convertirFileABytes(archivo));
+                    repaint();
                 } catch (IOException ex) {
                     labelImagenJugador.setText("Error al cargar la imagen");
                 }
@@ -84,18 +72,8 @@ public class PanelDetallesJugador extends JPanel {
             File archivo = fileChooser.getSelectedFile();
             if (archivo != null) {
                 try {
-                    BufferedImage imagen = ImageIO.read(archivo);
-                    if (imagen == null) {
-                        JOptionPane.showMessageDialog(null, "Debes añadir una imagen JPG o PNG");
-                        return;
-                    }
-                    else {
-                        imagenController.replaceImagenJugador(jugadorDto.getNombreCompleto(), convertirFileABytes(archivo));
-                        botonEditarImagen.setVisible(false);
-                        JOptionPane.showMessageDialog(null, "Reinicia la app o pulse de nuevo en buscar para que se cargue la imagen.");
-
-                    }
-
+                    jugadoresController.changeImagenJugador(jugadorDto.getId(), convertirFileABytes(archivo));
+                    repaint();
                 } catch (IOException ex) {
                     labelImagenJugador.setText("Error al cargar la imagen");
                 }

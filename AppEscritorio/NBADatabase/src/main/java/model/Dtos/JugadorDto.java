@@ -1,6 +1,8 @@
 package model.Dtos;
 
 public class JugadorDto {
+
+    private Long id;
     private String nombreCompleto;
     private String nombreEquipo;
     private String posicion;
@@ -14,7 +16,8 @@ public class JugadorDto {
 
     private byte[] imagen;
 
-    public JugadorDto(String nombreCompleto, String nombreEquipo, String posicion, String altura, String peso, String numero, String fechaDraft, String rondaDraft, String numeroDraft, String procedencia, byte[] imagen) {
+    public JugadorDto(Long id ,String nombreCompleto, String nombreEquipo, String posicion, String altura, String peso, String numero, String fechaDraft, String rondaDraft, String numeroDraft, String procedencia, byte[] imagen) {
+        this.id = id;
         this.nombreCompleto = nombreCompleto;
         this.nombreEquipo = nombreEquipo;
         this.posicion = posicion;
@@ -26,6 +29,13 @@ public class JugadorDto {
         this.numeroDraft = numeroDraft;
         this.procedencia = procedencia;
         this.imagen = imagen;
+    }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNombreCompleto() {

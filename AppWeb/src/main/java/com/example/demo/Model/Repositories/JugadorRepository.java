@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
 public interface JugadorRepository extends JpaRepository<Jugador, Long>{
+
 }
