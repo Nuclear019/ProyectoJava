@@ -7,15 +7,12 @@ import com.example.demo.Services.JugadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.awt.*;
 import java.util.Base64;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.Map;
+
 @Controller
 public class JugadorController {
 
@@ -36,13 +33,11 @@ public class JugadorController {
     @GetMapping(value = "/jugadoresNBA")
     public ModelAndView getJugadores() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("Jugadores/jugadoresTable");
+        modelAndView.setViewName("JugadoresNBA");
 
         List<Jugador> jugadores = jugadorService.getJugadores();
-        List<Imagen> imagenes = imageService.getImages();
 
         modelAndView.addObject("jugadores", jugadores);
-        modelAndView.addObject("imagenes", imagenes);
 
         return modelAndView;
     }

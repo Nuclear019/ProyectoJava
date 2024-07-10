@@ -1,0 +1,14 @@
+/* Estilos para el GridPane */
+.grid-pane {
+    -fx-alignment: CENTER; /* Centrar el contenido del GridPane */
+}
+
+/* Estilos para las tarjetas (cards) */
+.card {
+    -fx-background-color: #f0f0f0; /* Color de fondo */
+    -fx-padding: 10px; /* Espaciado interno */
+    -fx-border-color: #ccc; /* Color del borde */
+    -fx-border-width: 1px; /* Grosor del borde */
+    -fx-border-radius: 5px; /* Radio de esquina del borde */
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.2) , 10, 0, 0, 1 );
+}

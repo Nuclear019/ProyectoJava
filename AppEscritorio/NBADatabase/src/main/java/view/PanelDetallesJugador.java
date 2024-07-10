@@ -34,19 +34,6 @@ public class PanelDetallesJugador extends JPanel {
         labelNotFoundImagen = new JLabel("Imagen no encontrada");
         botonEditarImagen = new JButton("Editar imagen");
         botonAñadirImagen = new JButton("Añadir imagen");
-        if (jugadorDto.getImagen() != null) {
-            InputStream inputStream = new ByteArrayInputStream(jugadorDto.getImagen());
-            try {
-                BufferedImage imagen = ImageIO.read(inputStream);
-                ImageIcon icono = new ImageIcon(imagen);
-                Image image = icono.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-                ImageIcon iconoEscalado = new ImageIcon(image);
-                labelImagenJugador = new JLabel(iconoEscalado);
-
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(null, "Error al cargar la imagen");
-            }
-        }
 
         nombreJugador = new JLabel(jugadorDto.getNombreCompleto());
         nombreJugador.setFont(new Font("Arial", Font.BOLD, 20));
@@ -95,6 +82,21 @@ public class PanelDetallesJugador extends JPanel {
             addGB(botonAñadirImagen, 2, 0);
         }
         setBounds(20, 20, 400, 400);
+
+        if (jugadorDto.getImagen() != null) {
+            InputStream inputStream = new ByteArrayInputStream(jugadorDto.getImagen());
+            try {
+
+                BufferedImage imagen = ImageIO.read(inputStream);
+                ImageIcon icono = new ImageIcon(imagen);
+                Image image = icono.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                ImageIcon iconoEscalado = new ImageIcon(image);
+                labelImagenJugador = new JLabel(iconoEscalado);
+
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Error al cargar la imagen");
+            }
+        }
 
     }
     public void addGB(Component component, int x, int y) {

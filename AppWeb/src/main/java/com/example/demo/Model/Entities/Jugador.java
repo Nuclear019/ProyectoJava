@@ -5,6 +5,8 @@ import com.example.demo.Model.Classes.Draft;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Base64;
+
 @Entity
 public class Jugador implements Serializable {
     @Id
@@ -140,6 +142,11 @@ public class Jugador implements Serializable {
         this.draft = draft;
     }
 
+    public String getImagen(byte[] bytes) {
+        String base64Image = Base64.getEncoder().encodeToString(getFoto());
+
+        return base64Image;
+    }
     @Override
     public String toString() {
         return  nombre +" "+ apellido + "("+ numero+"): '" +

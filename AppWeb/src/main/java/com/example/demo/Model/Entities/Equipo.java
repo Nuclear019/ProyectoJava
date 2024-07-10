@@ -5,10 +5,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 
 import java.io.Serializable;
+import java.util.Base64;
+
 @Entity
 public class Equipo implements Serializable {
     @Id
     private Long idEquipo;
+
+    private  byte[] logoEquipo;
+
     private String abreviatura;
     private String ciudad;
     private String conferencia;
@@ -16,12 +21,12 @@ public class Equipo implements Serializable {
     private String division;
     private String nombreCompleto;
     private String nombre;
-
     public Equipo() {
     }
 
-    public Equipo(long id, String abbreviation, String city, String conference, String division, String full_name, String name) {
+    public Equipo(long id, byte[] logoEquipo, String abbreviation, String city, String conference, String division, String full_name, String name) {
         this.idEquipo = id;
+        this.logoEquipo = logoEquipo;
         this.abreviatura = abbreviation;
         this.ciudad = city;
         this.conferencia = conference; // Fix: Assign the 'conference' parameter to the 'conferencia' field
@@ -36,6 +41,14 @@ public class Equipo implements Serializable {
 
     public void setIdEquipo(long idEquipo) {
         this.idEquipo = idEquipo;
+    }
+
+    public byte[] getLogoEquipo() {
+        return logoEquipo;
+    }
+
+    public void setLogoEquipo(byte[] logoEquipo) {
+        this.logoEquipo = logoEquipo;
     }
 
     public String getAbreviatura() {
@@ -85,6 +98,7 @@ public class Equipo implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
 
     @Override
     public String toString() {
