@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.appdesktop.controller.JugadoresController">
+    <children>
+        <VBox prefHeight="800.0" prefWidth="800.0" minHeight="400" minWidth="400" maxHeight="Infinity" stylesheets="@../../../../css/style.css" alignment="CENTER">
+            <children>
+                <HBox spacing="10" alignment="CENTER">
+                    <ComboBox fx:id="filterSelect" />
+                    <TextField fx:id="searchInput" promptText="Buscar jugadores..." />
+                </HBox>
+                <GridPane fx:id="jugadoresContainer" hgap="10" vgap="10" alignment="CENTER">
+                    <!-- Añade tus elementos del GridPane aquí -->
+                </GridPane>
+                <Pagination fx:id="pagination" prefHeight="342.0" prefWidth="342.0" />
+            </children>
+        </VBox>
+    </children>
+</StackPane>

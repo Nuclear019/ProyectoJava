@@ -1,23 +1,30 @@
 package org.example.appdesktop.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import org.example.appdesktop.HelloApplication;
 import org.example.appdesktop.model.Daos.JugadorDao;
 import org.example.appdesktop.model.EMF;
 import org.example.appdesktop.model.Entities.Jugador;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -58,9 +65,7 @@ public class JugadoresController implements Initializable {
         filterSelect.getSelectionModel().selectFirst();
 
         // Listener para el campo de búsqueda
-        searchInput.textProperty().addListener((observable, oldValue, newValue) -> {
-            buscarJugadores();
-        });
+        searchInput.textProperty().addListener((observable, oldValue, newValue) -> buscarJugadores());
 
         // Cargar jugadores y mostrar la primera página
         jugadores = cargarJugadores();
@@ -176,6 +181,31 @@ public class JugadoresController implements Initializable {
         card.setMinWidth(200); // Ancho fijo
         card.setPrefHeight(100); // Alto fijo
 
+        // Añadir manejador de eventos para hacer clic en la tarjeta
+        card.setOnMouseClicked(event -> {
+            try {
+                mostrarDetallesJugador(jugador);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
         return card;
+    }
+
+    // Método para mostrar los detalles del jugador
+    private void mostrarDetallesJugador(Jugador jugador) throws IOException {
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("jugadores/DetalleJugador.fxml"));
+        Parent root = loader.load();
+
+        // Obtener el controlador de la vista de detalles y pasarle el jugador
+        DetalleJugadorController controller = loader.getController();
+        controller.setJugador(jugador);
+
+        // Crear una nueva escena y mostrarla en una nueva ventana
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Detalles del Jugador");
+        stage.show();
     }
 }
