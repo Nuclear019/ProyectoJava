@@ -33,7 +33,7 @@ public class JugadorController {
     @GetMapping(value = "/jugadoresNBA")
     public ModelAndView getJugadores() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("JugadoresNBA");
+        modelAndView.setViewName("Jugadores/JugadoresNBA");
 
         List<Jugador> jugadores = jugadorService.getJugadores();
 

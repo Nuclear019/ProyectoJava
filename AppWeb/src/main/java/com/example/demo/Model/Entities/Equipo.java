@@ -1,26 +1,31 @@
 package com.example.demo.Model.Entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
 
 import java.io.Serializable;
-import java.util.Base64;
 
 @Entity
+@Table(name = "Equipo")
 public class Equipo implements Serializable {
     @Id
     private Long idEquipo;
 
-    private  byte[] logoEquipo;
+    @Column(name = "LOGOEQUIPO")
+    private byte[] logoEquipo;
 
     private String abreviatura;
     private String ciudad;
     private String conferencia;
-    @JoinColumn(name = "división")
+
+    @Column(name = "division") // Ensure this matches your database column exactly
     private String division;
     private String nombreCompleto;
     private String nombre;
+
     public Equipo() {
     }
 
@@ -29,7 +34,7 @@ public class Equipo implements Serializable {
         this.logoEquipo = logoEquipo;
         this.abreviatura = abbreviation;
         this.ciudad = city;
-        this.conferencia = conference; // Fix: Assign the 'conference' parameter to the 'conferencia' field
+        this.conferencia = conference;
         this.division = division;
         this.nombreCompleto = full_name;
         this.nombre = name;
@@ -99,9 +104,8 @@ public class Equipo implements Serializable {
         this.nombre = nombre;
     }
 
-
     @Override
     public String toString() {
-        return nombreCompleto+"("+abreviatura+"): "+ciudad+"\n";
+        return nombreCompleto + "(" + abreviatura + "): " + ciudad + "\n";
     }
 }

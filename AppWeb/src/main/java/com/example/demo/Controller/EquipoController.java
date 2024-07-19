@@ -17,13 +17,5 @@ public class EquipoController {
         this.equipoService = equipoService;
     }
 
-    @GetMapping("/equiposNBA")
-    public ModelAndView equiposNBA(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("Equipos/EquiposNBA");
-        List<Equipo> equipos = equipoService.getEquipos();
-        modelAndView.addObject("equipos", equipos);
-        return modelAndView;
-    }
 
 }
