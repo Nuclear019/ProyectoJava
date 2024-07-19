@@ -19,4 +19,8 @@ public class EquipoService {
         List<Equipo> equipos = equipoRepository.findAll();
         return equipos;
     }
+    public Equipo getEquipoById(Long id){
+        Equipo equipo = equipoRepository.findById(id).orElse(null);
+        return equipo;
+    }
 }

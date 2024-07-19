@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Model.Classes.Draft;
 import com.example.demo.Model.Entities.Imagen;
 import com.example.demo.Model.Entities.Jugador;
 import com.example.demo.Services.ImageService;
@@ -48,11 +49,27 @@ public class JugadorController {
         modelAndView.setViewName("Jugadores/JugadorDetalles");
         modelAndView.addObject("jugador", jugador);
         Imagen imagen = imageService.getImageByJugador(jugadorService.getJugadorById(idJugador));
+        byte[] logoEquipo = jugador.getIdEquipo().getLogoEquipo();
+        if (jugador != null && jugador.getDraft() == null) {
+            jugador.setDraft(new Draft()); // Asegúrate de que draft no sea null
+        }
 
-        String base64Image = Base64.getEncoder().encodeToString(imagen.getImagen());
-        modelAndView.addObject("imagen", base64Image);
+        if (logoEquipo == null){
+            modelAndView.addObject("logoEquipo", null);
+        }else{
+            String base64ImageTeamLogo = Base64.getEncoder().encodeToString(logoEquipo);
+            modelAndView.addObject("logoEquipo", base64ImageTeamLogo);
+        }
+
+        if (imagen ==null){
+            modelAndView.addObject("imagen", null);
+        }else{
+            String base64ImagePlayer = Base64.getEncoder().encodeToString(imagen.getImagen());
+            modelAndView.addObject("imagen", base64ImagePlayer);
+        }
         return modelAndView;
     }
+
 
 
 }
