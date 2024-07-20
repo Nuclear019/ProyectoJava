@@ -88,10 +88,10 @@
 
 
                             <th:block th:if="${logoEquipo != null}">
-                                <p><strong>Equipo:</strong><img th:src="'data:image/png;base64,' + ${logoEquipo}" class="team-photo" alt="Imagen del Jugador" /> <span th:text="${jugador.idEquipo.nombre}"></span></p>
+                                <p><strong>Equipo actual/histórico:</strong><img th:src="'data:image/png;base64,' + ${logoEquipo}" class="team-photo" alt="Imagen del Jugador" /> <span th:text="${jugador.idEquipo.getNombreCompleto()}"></span></p>
                             </th:block>
                             <th:block th:unless="${logoEquipo != null}">
-                                <p><strong>Equipo:</strong><img th:src="@{/img/defaultLogo.png}" class="team-photo" alt="Imagen del Jugador"/> <span th:text="${jugador.idEquipo.nombre}"></span></p>
+                                <p><strong>Equipo actual/histórico:</strong><img th:src="@{/img/defaultLogo.png}" class="team-photo" alt="Imagen del Jugador"/> <span th:text="${jugador.idEquipo.getNombreCompleto()}"></span></p>
 
 
                             </th:block>

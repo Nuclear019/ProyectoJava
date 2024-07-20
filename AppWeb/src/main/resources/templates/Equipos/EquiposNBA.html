@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>NBA APP</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" th:href="@{/styles/myStyles/style.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            margin: 10px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .breadcrumb {
+            background-color: transparent; /* Elimina el fondo del breadcrumb */
+        }
+    </style>
+</head>
+<body>
+<div class="container w-100">
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}" class="text-decoration-none">Inicio</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Equipos</li>
+        </ol>
+    </nav>
+
+    <div class="input-group mb-3">
+        <input type="text" id="searchInput" class="form-control" placeholder="Buscar jugadores...">
+    </div>
+
+    <div id="jugadoresContainer" class="grid-container">
+        <th:block th:each="equipo : ${equipos}">
+            <th:block th:if="${equipo.getConferencia() != null}">
+                <div class="card">
+                <div class="card-body">
+                    <th:block th:if="${equipo.getLogoEquipo() != null}">
+                        <img th:src="'data:image/png;base64,' + ${equipo.getImagen()}"
+                             style="height: 70px;width: 70px;" alt="Imagen del Jugador"/>
+                    </th:block>
+                    <th:block th:unless="${equipo.getLogoEquipo() != null}">
+                        <img th:src="@{/img/defaultLogo.png}" style="height: 70px;width: 70px;" alt="Imagen del Jugador"/>
+                    </th:block>
+                    <h5 class="card-title" th:text="${equipo.getNombreCompleto()+' ('+equipo.getAbreviatura()+') ' }"></h5>
+                    <p class="card-text" th:text="${equipo.getConferencia()}"></p>
+                    <a th:href="@{'/equiposNBA/equipo?id=' + ${equipo.getIdEquipo()}}" class="btn btn-primary">Ver detalles</a>
+                </div>
+            </div>
+
+            </th:block>
+        </th:block>
+    </div>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" id="prevPageItem">
+                <a class="page-link" href="#" aria-label="Previous" onclick="prevPage()">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link" id="pageIndicator">Page 1 of 1</span>
+            </li>
+            <li class="page-item" id="nextPageItem">
+                <a class="page-link" href="#" aria-label="Next" onclick="nextPage()">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+<script>
+    const itemsPerPage = 12;
+    let currentPage = 1;
+    let equipos = Array.from(document.querySelectorAll('.grid-container .card'));
+    let filteredEquipos = [...equipos];
+    let totalPages = Math.ceil(filteredEquipos.length / itemsPerPage);
+
+    function showPage(page) {
+        currentPage = page;
+        let start = (currentPage - 1) * itemsPerPage;
+        let end = start + itemsPerPage;
+
+        equipos.forEach(equipo => equipo.style.display = 'none');
+        filteredEquipos.slice(start, end).forEach(equipo => equipo.style.display = 'block');
+
+        updatePageIndicator();
+        updatePaginationControls();
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            showPage(currentPage - 1);
+        }
+    }
+
+    function nextPage() {
+        if (currentPage < totalPages) {
+            showPage(currentPage + 1);
+        }
+    }
+
+    function updatePageIndicator() {
+        document.getElementById('pageIndicator').innerText = 'Page ' + currentPage + ' of ' + totalPages;
+    }
+
+    function updatePaginationControls() {
+        document.getElementById('prevPageItem').classList.toggle('disabled', currentPage === 1);
+        document.getElementById('nextPageItem').classList.toggle('disabled', currentPage === totalPages);
+    }
+
+    function filterEquipos() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+
+        filteredEquipos = equipos.filter(equipo => {
+                const name = equipo.querySelector('.card-title').innerText.toLowerCase();
+                return name.includes(query);
+        });
+
+        totalPages = Math.ceil(filteredEquipos.length / itemsPerPage);
+        showPage(1);
+    }
+
+    document.getElementById('searchInput').addEventListener('input', filterEquipos);
+    document.getElementById('filterSelect').addEventListener('change', filterEquipos);
+
+    // Initial call to display the first page
+    showPage(1);
+</script>
+</body>
+</html>

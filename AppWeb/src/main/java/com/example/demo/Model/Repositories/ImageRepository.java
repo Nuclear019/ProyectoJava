@@ -1,5 +1,6 @@
 package com.example.demo.Model.Repositories;
 
+import com.example.demo.Model.Entities.Equipo;
 import com.example.demo.Model.Entities.Imagen;
 import com.example.demo.Model.Entities.Jugador;
 import org.springframework.data.jpa.repository.JpaRepository;

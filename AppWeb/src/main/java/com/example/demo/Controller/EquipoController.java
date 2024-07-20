@@ -23,7 +23,9 @@ public class EquipoController {
     @GetMapping("/equiposNBA")
     public ModelAndView getEquipos() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("desarrollando");
+        modelAndView.setViewName("Equipos/EquiposNBA");
+        List<Equipo> equipos = equipoService.getEquipos();
+        modelAndView.addObject("equipos", equipos);
         return modelAndView;
     }
 

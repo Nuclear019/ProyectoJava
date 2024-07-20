@@ -47,7 +47,7 @@
             <div class="card">
                 <div class="card-body">
                     <th:block th:if="${jugador.getFoto() != null}">
-                        <img th:src="'data:image/png;base64,' + ${jugador.getImagen(jugador.getFoto())}"
+                        <img th:src="'data:image/png;base64,' + ${jugador.getImagen()}"
                              style="height: 70px;width: 70px;" alt="Imagen del Jugador"/>
                     </th:block>
                     <th:block th:unless="${jugador.getFoto() != null}">

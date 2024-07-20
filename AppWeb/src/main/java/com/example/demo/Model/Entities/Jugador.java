@@ -142,7 +142,7 @@ public class Jugador implements Serializable {
         this.draft = draft;
     }
 
-    public String getImagen(byte[] bytes) {
+    public String getImagen() {
         String base64Image = Base64.getEncoder().encodeToString(getFoto());
 
         return base64Image;

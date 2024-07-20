@@ -7,6 +7,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
 import java.io.Serializable;
+import java.util.Base64;
 
 @Entity
 @Table(name = "Equipo")
@@ -103,7 +104,11 @@ public class Equipo implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+    public String getImagen() {
+        String base64Image = Base64.getEncoder().encodeToString(getLogoEquipo());
 
+        return base64Image;
+    }
     @Override
     public String toString() {
         return nombreCompleto + "(" + abreviatura + "): " + ciudad + "\n";

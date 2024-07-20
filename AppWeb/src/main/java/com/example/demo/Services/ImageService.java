@@ -1,5 +1,6 @@
 package com.example.demo.Services;
 
+import com.example.demo.Model.Entities.Equipo;
 import com.example.demo.Model.Entities.Imagen;
 import com.example.demo.Model.Entities.Jugador;
 import com.example.demo.Model.Repositories.ImageRepository;
@@ -23,7 +24,6 @@ public class ImageService {
         return imagen;
 
     }
-
     public List<Imagen> getImages(){
         List<Imagen> imagenes = imageRepository.findAll();
         return imagenes;
