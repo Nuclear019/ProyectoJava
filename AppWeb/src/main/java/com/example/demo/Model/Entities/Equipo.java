@@ -109,6 +109,7 @@ public class Equipo implements Serializable {
 
         return base64Image;
     }
+
     @Override
     public String toString() {
         return nombreCompleto + "(" + abreviatura + "): " + ciudad + "\n";

@@ -1,7 +1,9 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Model.Entities.Equipo;
+import com.example.demo.Model.Entities.Partido;
 import com.example.demo.Services.EquipoService;
+import com.example.demo.Services.PartidoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,9 +16,11 @@ import java.util.List;
 public class EquipoController {
 
     EquipoService equipoService;
+    PartidoService partidoService;
 
-    public EquipoController(EquipoService equipoService) {
+    public EquipoController(EquipoService  equipoService, PartidoService partidoService) {
         this.equipoService = equipoService;
+        this.partidoService = partidoService;
     }
 
 
@@ -32,7 +36,14 @@ public class EquipoController {
     @GetMapping("/equiposNBA/equipo")
     public ModelAndView obtenerEquipoPorId(@RequestParam("id") Long idEquipo) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("desarrollando");
+        modelAndView.setViewName("Equipos/EquipoDetalles");
+        Equipo equipo = equipoService.getEquipoById(idEquipo);
+        modelAndView.addObject("equipo", equipo);
+
+        List<Partido> partidos = partidoService.getPartidoByEquipo(equipo);
+                modelAndView.addObject("partidos", partidos);
         return modelAndView;
     }
+
+
 }
