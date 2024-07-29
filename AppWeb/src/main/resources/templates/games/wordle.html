@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wordle - NBA</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+        margin: 0;
+        overflow: hidden;
+    }
+
+    .container {
+        text-align: center;
+    }
+
+    #game-board {
+        display: grid;
+        grid-gap: 5px;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .cell {
+        width: 50px;
+        height: 50px;
+        border: 2px solid #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .correct {
+        background-color: green;
+        color: white;
+    }
+
+    .present {
+        background-color: yellow;
+        color: black;
+    }
+
+    .absent {
+        background-color: grey;
+        color: white;
+    }
+
+    #keyboard-container {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        grid-gap: 5px;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .key {
+        width: 40px;
+        height: 40px;
+        border: 1px solid #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .message {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 36px;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        border: 2px solid green;
+        display: none;
+        z-index: 1000;
+        text-align: center;
+    }
+
+    .next-word {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 20px;
+        color: black;
+    }
+
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Wordle - Nombres de Jugadores</h1>
+    <div id="game-board"></div>
+    <div id="keyboard-container"></div>
+    <div id="message-container" class="message"></div>
+    <div id="next-word-container" class="next-word"></div>
+</div>
+
+<script>const jugadores = ["JORDAN", "BRYANT", "JAMES", "CURRY", "DURANT", "SHAQ", "BIRD", "MAGIC", "OLAJUWON", "MALONE"];
+let selectedJugador = "";
+let attempts = [];
+const maxAttempts = 6;
+let gameEnded = false;
+
+document.addEventListener("DOMContentLoaded", () => {
+    selectJugadorOfDay();
+    document.addEventListener("keydown", handleKeydown);
+    startCountdown();
+});
+
+function selectJugadorOfDay() {
+    const date = new Date();
+    const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+    selectedJugador = jugadores[dayOfYear % jugadores.length];
+    attempts = [];
+    gameEnded = false;
+    renderBoard();
+    renderKeyboard();
+    hideMessage();
+}
+
+function renderBoard() {
+    const board = document.getElementById("game-board");
+    board.innerHTML = "";
+    board.style.gridTemplateColumns = `repeat(${selectedJugador.length}, 50px)`;
+    for (let i = 0; i < maxAttempts; i++) {
+        for (let j = 0; j < selectedJugador.length; j++) {
+            const cell = document.createElement("div");
+            cell.classList.add("cell");
+            if (attempts[i] && attempts[i][j]) {
+                cell.textContent = attempts[i][j].letter;
+                cell.classList.add(attempts[i][j].status);
+            }
+            board.appendChild(cell);
+        }
+    }
+}
+
+function renderKeyboard() {
+    const keyboardContainer = document.getElementById("keyboard-container");
+    keyboardContainer.innerHTML = "";
+    const keys = "QWERTYUIOPASDFGHJKLZXCVBNM".split("");
+    keys.forEach(key => {
+        const keyElement = document.createElement("div");
+        keyElement.textContent = key;
+        keyElement.classList.add("key");
+        keyElement.addEventListener("click", () => handleKeyPress(key));
+        keyboardContainer.appendChild(keyElement);
+    });
+}
+
+function handleKeyPress(key) {
+    if (gameEnded) return;
+
+    if (attempts.length < maxAttempts && (attempts.length === 0 || attempts[attempts.length - 1].length === selectedJugador.length)) {
+        attempts.push([]);
+    }
+    if (attempts[attempts.length - 1].length < selectedJugador.length) {
+        attempts[attempts.length - 1].push({ letter: key, status: "absent" });
+        updateAttemptStatus();
+        renderBoard();
+        checkWin();
+    }
+}
+
+function handleKeydown(event) {
+    if (gameEnded) return;
+
+    const key = event.key.toUpperCase();
+    if (/^[A-Z]$/.test(key)) {
+        handleKeyPress(key);
+    }
+}
+
+function updateAttemptStatus() {
+    const currentAttempt = attempts[attempts.length - 1];
+    const letterCount = {};
+    for (let i = 0; i < selectedJugador.length; i++) {
+        letterCount[selectedJugador[i]] = (letterCount[selectedJugador[i]] || 0) + 1;
+    }
+    for (let i = 0; i < currentAttempt.length; i++) {
+        if (selectedJugador[i] === currentAttempt[i].letter) {
+            currentAttempt[i].status = "correct";
+            letterCount[currentAttempt[i].letter]--;
+        }
+    }
+    for (let i = 0; i < currentAttempt.length; i++) {
+        if (currentAttempt[i].status !== "correct" && selectedJugador.includes(currentAttempt[i].letter) && letterCount[currentAttempt[i].letter] > 0) {
+            currentAttempt[i].status = "present";
+            letterCount[currentAttempt[i].letter]--;
+        }
+    }
+}
+
+function checkWin() {
+    const currentAttempt = attempts[attempts.length - 1];
+    const currentWord = currentAttempt.map(attempt => attempt.letter).join('');
+    if (currentWord === selectedJugador) {
+        gameEnded = true;
+        showMessage("¡Enhorabuena! Has acertado la palabra.");
+    }
+}
+
+function showMessage(message) {
+    const messageContainer = document.getElementById("message-container");
+    messageContainer.textContent = message;
+    messageContainer.style.display = "block";
+}
+
+function hideMessage() {
+    const messageContainer = document.getElementById("message-container");
+    messageContainer.style.display = "none";
+}
+
+function startCountdown() {
+    const nextWordContainer = document.getElementById("next-word-container");
+    const updateCountdown = () => {
+        const now = new Date();
+        const nextDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+        const diff = nextDay - now;
+
+        const hours = Math.floor(diff / 1000 / 60 / 60);
+        const minutes = Math.floor((diff / 1000 / 60) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        nextWordContainer.textContent = `Próxima palabra en ${hours}h ${minutes}m ${seconds}s`;
+    };
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+}
+
+
+</script>
+</body>
+</html>
